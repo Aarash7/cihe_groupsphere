@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane fx:id="root"
+            xmlns="http://javafx.com/javafx/24.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.mycompany.cihe_groupsphere.AssignmentPageController"
+            prefWidth="900.0" prefHeight="520.0"
+            style="-fx-background-color: transparent;"
+            stylesheets="@assignmentPage.css">
+
+    <center>
+        <VBox spacing="18" alignment="TOP_CENTER">
+            <BorderPane.margin>
+                <Insets top="28" right="28" bottom="28" left="28"/>
+            </BorderPane.margin>
+            <Label text="Your Groups"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #093637;"/>
+            <FlowPane fx:id="groupsFlowPane" hgap="22" vgap="22" prefWrapLength="850"
+                      style="-fx-background-color: transparent;">
+                <!-- Group “cards” will be added dynamically in controller -->
+            </FlowPane>
+        </VBox>
+    </center>
+
+</BorderPane>
+

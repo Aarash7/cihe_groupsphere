@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="root" prefHeight="640.0" prefWidth="1080.0" stylesheets="@userdashboard.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.cihe_groupsphere.UserDashboardController">
+
+    <!-- Top Header -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: linear-gradient(to right, #44a08d, #093637); -fx-padding: 10;">
+            <children>
+                <Label style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;" text="CIHE GroupSphere Dashboard" />
+                <StackPane HBox.hgrow="ALWAYS" />
+                <Label fx:id="welcomeLabel" style="-fx-text-fill: white; -fx-font-size: 14px;" text="Welcome, User!" />
+            </children>
+        </HBox>
+    </top>
+
+    <!-- Left Sidebar -->
+    <left>
+        <VBox prefWidth="180" spacing="15" style="-fx-background-color: #093637; -fx-padding: 20;">
+            <children>
+                <Button onAction="#showHome" styleClass="nav-button" text="Home" />
+                <Button onAction="#showGroupcreation" styleClass="nav-button" text="Create Group" />
+                <Button onAction="#showAssignmentPage" styleClass="nav-button" text="Assignments" />
+                <Button onAction="#showProfile" styleClass="nav-button" text="Profile" />
+                <Button onAction="#goToLogin" styleClass="nav-button" text="Logout" />
+            </children>
+        </VBox>
+    </left>
+
+    <!-- Center Content -->
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <content>
+                <VBox spacing="25" style="-fx-padding: 20;">
+                    <!-- Cards container -->
+                    <HBox spacing="20">
+                        <StackPane prefHeight="120" prefWidth="200" styleClass="card">
+                            <children>
+                                <VBox alignment="CENTER" spacing="12">
+                                    <Label styleClass="card-title" text="Groups Joined" />
+                                    <Label fx:id="groupsCountLabel" styleClass="card-value" text="5" />
+                                </VBox>
+                            </children>
+                        </StackPane>
+                        <StackPane prefHeight="120" prefWidth="200" styleClass="card">
+                            <children>
+                                <VBox alignment="CENTER" spacing="12">
+                                    <Label styleClass="card-title" text="Pending Tasks" />
+                                    <Label fx:id="pendingTasksLabel" styleClass="card-value" text="3" />
+                                </VBox>
+                            </children>
+                        </StackPane>
+                        <StackPane prefHeight="120" prefWidth="200" styleClass="card">
+                            <children>
+                                <VBox alignment="CENTER" spacing="12">
+                                    <Label styleClass="card-title" text="Messages" />
+                                    <Label fx:id="messagesCountLabel" styleClass="card-value" text="12" />
+                                </VBox>
+                            </children>
+                        </StackPane>
+                    </HBox>
+
+                    <!-- Recent Activity -->
+                    <VBox spacing="10" style="-fx-padding: 10 0 0 0;">
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Recent Activity" />
+                        <Label fx:id="recentActivityLabel" text="No recent activity." wrapText="true" />
+                    </VBox>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

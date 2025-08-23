@@ -1,0 +1,44 @@
+.profile-field {
+    -fx-background-radius: 6;
+    -fx-background-color: #f5f8f8;
+    -fx-border-radius: 6;
+    -fx-padding: 8 10;
+    -fx-font-size: 14px;
+    -fx-border-color: transparent;
+}
+.profile-field:focused {
+    -fx-border-color: #44a08d;
+    -fx-effect: dropshadow(gaussian, #44a08d55, 6, 0.3, 0, 0);
+    -fx-background-color: white;
+}
+
+.save-button {
+    -fx-background-color: linear-gradient(to right, #44a08d, #093637);
+    -fx-text-fill: white;
+    -fx-background-radius: 6;
+    -fx-padding: 8 20;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+}
+.save-button:hover {
+    -fx-background-color: linear-gradient(to right, #50c9a1, #093637);
+}
+
+.secondary-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #44a08d;
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+
+.section-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+}
+
+.field-label {
+    -fx-text-fill: #44a08d;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
