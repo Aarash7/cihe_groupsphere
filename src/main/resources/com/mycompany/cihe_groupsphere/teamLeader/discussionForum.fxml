@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns="http://javafx.com/javafx/24.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.mycompany.cihe_groupsphere.DiscussionForumController"
+            prefWidth="800" prefHeight="600">
+
+    <!-- Left: Chat Messages -->
+    <center>
+        <VBox spacing="10">
+            <Label text="Team Chat" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <TextArea fx:id="chatArea" editable="false" wrapText="true" prefHeight="400"/>
+            <HBox spacing="10">
+                <TextField fx:id="chatInput" promptText="Type your message here..." HBox.hgrow="ALWAYS"/>
+                <Button text="Send" onAction="#handleSendMessage"/>
+            </HBox>
+        </VBox>
+    </center>
+
+    <!-- Right: Poll and File Sharing -->
+    <right>
+        <VBox spacing="20" prefWidth="300" style="-fx-background-color: #f3f6f7;">
+            <!-- Poll Section -->
+            <VBox spacing="10">
+                <Label text="Create Poll" style="-fx-font-weight: bold;"/>
+                <TextField fx:id="pollQuestionField" promptText="Enter poll question..."/>
+                <TextField fx:id="pollOption1" promptText="Option 1"/>
+                <TextField fx:id="pollOption2" promptText="Option 2"/>
+                <VBox fx:id="additionalOptions" spacing="5"/>
+                <HBox spacing="10">
+                    <Button text="Add Option" onAction="#handleAddPollOption"/>
+                    <Button text="Create Poll" onAction="#handleCreatePoll"/>
+                </HBox>
+                <Label fx:id="pollStatusLabel"/>
+            </VBox>
+
+            <!-- File Sharing Section -->
+            <VBox spacing="10">
+                <Label text="Share Files" style="-fx-font-weight: bold;"/>
+                <Button text="Upload File" onAction="#handleUploadFile"/>
+                <ListView fx:id="fileListView" prefHeight="150"/>
+            </VBox>
+        </VBox>
+    </right>
+</BorderPane>
+
