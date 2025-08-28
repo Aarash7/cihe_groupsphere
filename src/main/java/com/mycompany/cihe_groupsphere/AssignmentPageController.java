@@ -16,6 +16,7 @@ public class AssignmentPageController {
 
     @FXML private FlowPane groupsFlowPane;
     @FXML private BorderPane root;
+    
     @FXML
     private void initialize() {
         String userEmail = SessionManager.getUserEmail();

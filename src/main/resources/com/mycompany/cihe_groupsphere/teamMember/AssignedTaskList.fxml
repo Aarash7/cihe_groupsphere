@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane fx:id="root"
+            xmlns="http://javafx.com/javafx/24.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.mycompany.cihe_groupsphere.AssignedTaskListController"
+            prefWidth="900.0" prefHeight="520.0"
+            style="-fx-background-color: #f0f4f5;">
+
+    <center>
+        <VBox spacing="24" alignment="TOP_CENTER" style="-fx-padding: 30;">
+            <Label fx:id ="nameLabel" text="Your Assigned Tasks"
+                   style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #222e35;"/>
+
+            <GridPane fx:id="taskGrid" hgap="20" vgap="20"
+                      style="-fx-background-color: transparent;">
+
+                <!-- Task cards will be added dynamically in controller -->
+
+            </GridPane>
+        </VBox>
+    </center>
+
+</BorderPane>

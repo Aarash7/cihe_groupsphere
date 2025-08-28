@@ -27,7 +27,7 @@
         
         <VBox prefHeight="120" prefWidth="180" spacing="10" style="-fx-background-color: #f59e0b; -fx-background-radius: 12; -fx-padding: 15;" GridPane.columnIndex="1">
           <Label style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: bold;" text="Discussion Forum" />
-          <Button text="Chat" />
+          <Button text="Chat" onAction="#openDiscussionForumPage" />
         </VBox>
         
         <VBox prefHeight="120" prefWidth="180" spacing="10" style="-fx-background-color: #3b82d3; -fx-background-radius: 12; -fx-padding: 15;" GridPane.columnIndex="2">

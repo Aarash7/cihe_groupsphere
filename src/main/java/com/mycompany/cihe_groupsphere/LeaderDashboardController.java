@@ -115,7 +115,7 @@ public class LeaderDashboardController implements Initializable {
     
     
     @FXML
-    private void openTaskManagementPage() {
+    private void openTaskManagementPage(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/cihe_groupsphere/teamLeader/taskManagement.fxml"));
             Parent root = loader.load();
@@ -132,9 +132,22 @@ public class LeaderDashboardController implements Initializable {
     }
     
  
-    
-    private void openResourcesPage(){
-        
+    @FXML
+    private void openDiscussionForumPage(ActionEvent event){
+        try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/cihe_groupsphere/teamLeader/discussionForum.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        stage.setTitle("Discussion Forum");
+        stage.setScene(new Scene(root));
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+
+    } catch (IOException e) {
+        e.printStackTrace();
+
+    }
     }
     
 }
