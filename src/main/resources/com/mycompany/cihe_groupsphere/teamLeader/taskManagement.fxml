@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="15" stylesheets="@style.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.cihe_groupsphere.TaskManagementController">
+
+    <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Assign Task to Group Member" />
+
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Label text="Member Email:" />
+        <ComboBox fx:id="memberEmailComboBox" prefWidth="300" promptText="--select team member--" />
+    </HBox>
+
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Label text="Task Name:" />
+        <TextField fx:id="taskNameField" prefWidth="300" />
+    </HBox>
+    
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Label text="Task Description:" />
+        <TextField fx:id="taskDescField" prefWidth="300" />
+    </HBox>
+    
+    <!-- Upload File Button -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Attach File"/>
+        <Button fx:id="uploadFileButton" text="Choose File" onAction="#onUploadFile"/>
+        <Label fx:id="fileNameLabel" text="No file selected" style="-fx-font-size: 12px; -fx-text-fill: #4a90e2;"/>
+    </HBox>
+
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Label text="Weightage % :" />
+        <TextField fx:id="weightageField" prefWidth="60" promptText="0-100" />
+        <Label text="Priority:" />
+        <ComboBox fx:id="priorityComboBox" prefWidth="150" promptText="--select--" />
+    </HBox>
+
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Label text="Risk:" />
+        <ComboBox fx:id="riskComboBox" prefWidth="110" promptText="--select--" />
+
+        <Label text="Deadline:" />
+        <DatePicker fx:id="deadlinePicker" promptText="--select date--" />
+    </HBox>
+
+    <Button maxWidth="150" text="Assign Task" onAction="#onAssignTask"/>
+
+</VBox>

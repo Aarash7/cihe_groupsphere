@@ -58,7 +58,7 @@ public class AssignmentPageController {
 
     private void openGroupDetailsPage(String groupName) {
     String userEmail = SessionManager.getUserEmail();
-
+    SessionManager.setGroupName(groupName);
     try (Connection conn = Database.getConnection()) {
         // Get group_id by groupName
         String groupIdSql = "SELECT group_id FROM groups WHERE groupname = ?";
@@ -69,6 +69,7 @@ public class AssignmentPageController {
         if (groupIdRs.next()) {
             groupId = groupIdRs.getInt("group_id");
         }
+        SessionManager.setGroupID(groupId);
         groupIdRs.close();
         groupIdStmt.close();
 
@@ -91,7 +92,7 @@ public class AssignmentPageController {
             userRole = "member"; // default role
         }
         // Determine FXML to load based on user role
-        String fxmlToLoad = userRole.equals("leader") ? "leaderDashboard.fxml" : "memberDashboard.fxml";
+        String fxmlToLoad = userRole.equals("leader") ? "teamLeader/leaderDashboard.fxml" : "teamMember/memberDashboard.fxml";
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlToLoad));
         Parent dashboardRoot = loader.load();
