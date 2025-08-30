@@ -22,12 +22,12 @@
 
         <VBox prefHeight="120" prefWidth="180" spacing="10" style="-fx-background-color: #44a08d; -fx-background-radius: 12; -fx-padding: 15;">
           <Label style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: bold;" text="Assign Task" />
-          <Button text="Go" onAction="#openTaskManagementPage" />
+          <Button onAction="#openTaskManagementPage" text="Go" />
         </VBox>      
         
         <VBox prefHeight="120" prefWidth="180" spacing="10" style="-fx-background-color: #f59e0b; -fx-background-radius: 12; -fx-padding: 15;" GridPane.columnIndex="1">
-          <Label style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: bold;" text="Discussion Forum" />
-          <Button text="Chat" onAction="#openDiscussionForumPage" />
+          <Label style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: bold;" text="Team Chat" />
+          <Button onAction="#openTeamChatPage" text="Chat" />
         </VBox>
         
         <VBox prefHeight="120" prefWidth="180" spacing="10" style="-fx-background-color: #3b82d3; -fx-background-radius: 12; -fx-padding: 15;" GridPane.columnIndex="2">
@@ -44,12 +44,29 @@
           <Label style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: bold;" text="Delete Group" />
           <Button text="Delete" />
         </VBox>
+        
+        <VBox prefHeight="120" prefWidth="180" spacing="10" style="-fx-background-color: #432413; -fx-background-radius: 12; -fx-padding: 15;" GridPane.columnIndex="2" GridPane.rowIndex="1">
+          <Label style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: bold;" text="My Tasks" />
+          <Button onAction="#openAssignedTaskListPage" text="Task" />
+        </VBox>
 
-        <VBox prefHeight="120" prefWidth="380" spacing="10" style="-fx-background-color: #6366f1; -fx-background-radius: 12; -fx-padding: 15;" GridPane.columnSpan="2" GridPane.rowIndex="2">
-          <Label style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: bold;" text="Add Team Member" />
+        <VBox prefHeight="120" prefWidth="180" spacing="10" style="-fx-background-color: #6366f1; -fx-background-radius: 12; -fx-padding: 15;" GridPane.rowIndex="2">
+          <Label style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: bold;" text="Add Team Members" wrapText="true" />
           <Button onAction="#onAddTeamMember" text="Add" />
         </VBox>
+        
+        <VBox prefHeight="120" prefWidth="180" spacing="10" style="-fx-background-color: #6366f1; -fx-background-radius: 12; -fx-padding: 15;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+          <Label style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: bold; " text="View Team Members" wrapText="true" />
+          <Button onAction="#onViewTeamMember" text="View" />
+        </VBox>
+        
+        <VBox prefHeight="120" prefWidth="180" spacing="10" style="-fx-background-color: #ec2413; -fx-background-radius: 12; -fx-padding: 15;" GridPane.columnIndex="2" GridPane.rowIndex="2">
+          <Label style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: bold;" text="Remove Team Members" wrapText="true" />
+          <Button text="Remove" onAction="#onRemoveTeamMember" />
+        </VBox>
+        
          <columnConstraints>
+            <ColumnConstraints />
             <ColumnConstraints />
             <ColumnConstraints />
          </columnConstraints>

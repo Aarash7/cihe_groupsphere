@@ -59,7 +59,7 @@ public class MemberDashboardController implements Initializable {
     }
     
     @FXML
-    private void openMemberList(ActionEvent event) throws Exception {
+    public void openMemberList(ActionEvent event) throws Exception {
        Dialog<Void> dialog = new Dialog<>();
        dialog.setTitle("Group Members");
        dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
@@ -85,14 +85,17 @@ public class MemberDashboardController implements Initializable {
            while (rs.next()) {
                String email = rs.getString("email");
                String role = rs.getString("role");
+               String name = "N/A";
                
                String stmt = "SELECT fullname FROM users WHERE email = ?";
-               PreparedStatement pstmt = conn.prepareStatement(stmt);
-               pstmt.setString(1, email);
-               ResultSet result = pstmt.executeQuery();
-               while (result.next()) {
-                    String name = result.getString("fullname");
-                    
+               try(PreparedStatement pstmt = conn.prepareStatement(stmt);){
+                   pstmt.setString(1, email);
+                   ResultSet result = pstmt.executeQuery();
+                   if (result.next()){
+                       name = result.getString("fullname");
+                    }
+               }
+          
                     Label nameLabel = new Label(name);
                     nameLabel.setStyle("-fx-padding: 6 10; -fx-font-size: 20px; -fx-text-fill: green;");
                     
@@ -107,7 +110,7 @@ public class MemberDashboardController implements Initializable {
                     memberListContainer.getChildren().add(nameLabel);
                     memberListContainer.getChildren().add(emailLabel);
                     memberListContainer.getChildren().add(roleLabel);
-               } 
+               
                
            }
 
@@ -119,6 +122,11 @@ public class MemberDashboardController implements Initializable {
        }
 
        dialog.showAndWait();
+    }
+    
+    @FXML
+    private void openTeamChatPage(ActionEvent event){
+        new ChatPage().show();
     }
 
 }

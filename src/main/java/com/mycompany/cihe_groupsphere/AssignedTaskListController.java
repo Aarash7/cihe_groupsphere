@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 
 import javafx.scene.layout.BorderPane;
@@ -80,8 +82,19 @@ public class AssignedTaskListController implements Initializable {
         }
     }
     
+    // Update the status of the task in the database
+    private void updateTaskStatusInDatabase(int taskId, String newStatus) throws SQLException, Exception {
+        String sql = "UPDATE tasks SET status = ? WHERE task_id = ?";
+        try (Connection conn = Database.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, newStatus);
+            ps.setInt(2, taskId);
+            ps.executeUpdate();
+        }
+    }
+    
     // Display Task List
-    private void displayTasks() {
+    private void displayTasks() throws Exception {
         taskGrid.getChildren().clear();
         
         if (taskList.isEmpty()) {
@@ -109,12 +122,15 @@ public class AssignedTaskListController implements Initializable {
     }
     
     //Create a Task List Card
-    private VBox createTaskCard(Map<String, Object> task) {
+    private VBox createTaskCard(Map<String, Object> task) throws Exception {
         Label title = new Label((String) task.get("title"));
         title.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #073642;");
 
         Label description = new Label("Description: " + task.get("description"));
         description.setStyle("-fx-text-fill: #586e75; -fx-font-weight: 800;");
+        description.setWrapText(true); //Error: Not wrapping text
+        description.setPrefWidth(240);
+
         
         Label priority = new Label("Priority: " + task.get("priority"));
         priority.setStyle("-fx-text-fill: #d33a2f; -fx-font-weight: 600;");
@@ -127,21 +143,46 @@ public class AssignedTaskListController implements Initializable {
         
         Label deadlineLabel = new Label("Deadline: " + deadline);
         deadlineLabel.setStyle("-fx-text-fill: #586e75;");
-
-        Label submit = new Label("Submit");
-        submit.setStyle("-fx-background-color: green; -fx-text-fill: white; -fx-padding: 4 10 4 10; -fx-background-radius: 6; -fx-font-weight: bold;");
-        submit.setOnMouseClicked(e -> showTaskDetails(task));
         
         // Determine status, mark overdue if deadline before today and not completed
         String originalStatus = (String) task.get("status");
         String effectiveStatus = originalStatus;
-
-        if (deadline != null && deadline.isBefore(LocalDate.now()) && !"Completed".equalsIgnoreCase(originalStatus)) {
+        if (deadline != null && deadline.isBefore(LocalDate.now()) && !"completed".equalsIgnoreCase(originalStatus)) {
             effectiveStatus = "Overdue";
+            int taskId = (int) task.get("task_id");
+            updateTaskStatusInDatabase(taskId, "overdue"); // Update DB
         }
 
         Label statusLabel = new Label("Status: " + effectiveStatus);
         styleStatusLabel(statusLabel, effectiveStatus);
+        
+        
+        //Handle Status update on click
+        Label submit = new Label("Update Status");
+        submit.setStyle("-fx-background-color: green; -fx-text-fill: white; -fx-padding: 4 10 4 10; -fx-background-radius: 6; -fx-font-weight: bold;");
+        submit.setOnMouseClicked(e -> {
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+            confirm.setTitle("Confirm Status Update");
+            confirm.setHeaderText("Mark this task as completed?");
+            confirm.setContentText("Have you completed the task?");
+            Optional<ButtonType> result = confirm.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                try {
+                    int taskId = (int) task.get("task_id");
+                    updateTaskStatusInDatabase(taskId, "completed"); // Update DB
+                    statusLabel.setText("Status: Completed");
+                    styleStatusLabel(statusLabel, "Completed"); // Change color to green
+                    task.put("status", "Completed");
+                    showAlert(Alert.AlertType.INFORMATION, "Status Updated", "Task marked as completed!");
+                } catch (Exception ex) {
+                    showAlert(Alert.AlertType.ERROR, "Error", "Could not update task status.");
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        
         
         VBox card = new VBox(10, title, description, weightage, priority, deadlineLabel, statusLabel, submit);
         card.setPadding(new Insets(15));
@@ -153,19 +194,12 @@ public class AssignedTaskListController implements Initializable {
             "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 2);"
         );
         card.setPrefWidth(250);
+        card.setMaxWidth(250);
+
 
         // Change cursor to hand on hover
-        card.setOnMouseEntered(e -> card.setStyle(card.getStyle() + "-fx-cursor: hand;"));
-        card.setOnMouseExited(e -> card.setStyle(
-            "-fx-background-color: white;" +
-            "-fx-background-radius: 15;" +
-            "-fx-border-radius: 15;" +
-            "-fx-border-color: #eee;" +
-            "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 2);"
-        ));
-
-        
-
+        submit.setOnMouseEntered(e -> submit.setStyle(submit.getStyle() + "-fx-cursor: hand;"));
+  
         return card;
     }
 
@@ -189,25 +223,7 @@ public class AssignedTaskListController implements Initializable {
         label.setStyle("-fx-background-color: " + backgroundColor + "; -fx-text-fill: white; -fx-padding: 4 10 4 10; -fx-background-radius: 6; -fx-font-weight: bold;");
     }
     
-    
-    private void showTaskDetails(Map<String, Object> task) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Task Details");
-        alert.setHeaderText((String) task.get("title"));
-
-        java.sql.Date deadlineSql = (java.sql.Date) task.get("deadline");
-        String deadlineStr = (deadlineSql != null) ? deadlineSql.toLocalDate().toString() : "N/A";
-
-        StringBuilder content = new StringBuilder();
-        content.append("Description: ").append(task.get("description")).append("\n")
-               .append("Assigned To: ").append(task.get("assigned_to")).append("\n")
-               .append("Priority: ").append(task.get("priority")).append("\n")
-               .append("Deadline: ").append(deadlineStr).append("\n")
-               .append("Status: ").append(task.get("status"));
-
-        alert.setContentText(content.toString());
-        alert.showAndWait();
-    }
+   
 
     private void showAlert(Alert.AlertType type, String title, String msg) {
         Alert alert = new Alert(type);

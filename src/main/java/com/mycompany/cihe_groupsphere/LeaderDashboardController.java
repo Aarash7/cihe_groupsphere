@@ -19,6 +19,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Modality;
@@ -39,7 +40,7 @@ public class LeaderDashboardController implements Initializable {
     private void onAddTeamMember() {
         while (true) {
             TextInputDialog dialog = new TextInputDialog();
-            dialog.setTitle("Add Team Member");
+            dialog.setTitle("Add Team Members");
             dialog.setHeaderText("Enter the email of the new team member to add:");
             dialog.setContentText("Team Member Email:");
 
@@ -79,9 +80,6 @@ public class LeaderDashboardController implements Initializable {
             break;
         }
     }
-
-
-
 
     // Simple email validation using regex
     private boolean isValidEmail(String email) {
@@ -133,21 +131,35 @@ public class LeaderDashboardController implements Initializable {
     
  
     @FXML
-    private void openDiscussionForumPage(ActionEvent event){
-        try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/cihe_groupsphere/teamLeader/discussionForum.fxml"));
-        Parent root = loader.load();
-
-        Stage stage = new Stage();
-        stage.setTitle("Discussion Forum");
-        stage.setScene(new Scene(root));
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
-
-    } catch (IOException e) {
-        e.printStackTrace();
-
+    private void openTeamChatPage(ActionEvent event){
+        new ChatPage().show();
     }
+    
+    @FXML
+    private void openAssignedTaskListPage(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/cihe_groupsphere/teamMember/AssignedTaskList.fxml"));
+            Parent root = loader.load();
+                    
+            Stage stage = new Stage();
+            stage.setTitle("Task Assigned");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL); // blocks back window
+            stage.show();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @FXML
+    private void onViewTeamMember(ActionEvent event) throws Exception {
+        new MemberDashboardController().openMemberList(event);
+    }
+    
+    @FXML
+    private void onRemoveTeamMember(ActionEvent event) throws Exception {
+        
     }
     
 }
